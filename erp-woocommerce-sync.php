@@ -25,16 +25,15 @@ require_once plugin_dir_path(__FILE__) . 'admin/class-settings.php';
 
 
 
-/**
- * Order Handler Files
- */
+// Load Abstract Class First
+require_once plugin_dir_path(__FILE__) . 'includes/order/class-abstract-order-handler.php';
+
+// Load Order Handlers After Abstract Class
 require_once plugin_dir_path(__FILE__) . 'includes/order/class-rest-order-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/order/class-order-resend-handler.php';
-require_once plugin_dir_path(__FILE__) . 'includes/handlers/class-checkout-validation-handler.php';
 
-/**
- * Data Import Files
- */
+// Load Other Dependencies
+require_once plugin_dir_path(__FILE__) . 'includes/handlers/class-checkout-validation-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/imports/class-importer.php';
 require_once plugin_dir_path(__FILE__) . 'includes/imports/class-rest-api.php';
 require_once plugin_dir_path(__FILE__) . 'includes/imports/class-cron.php';
