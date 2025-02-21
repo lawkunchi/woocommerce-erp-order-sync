@@ -61,6 +61,9 @@ class ERP_WooCommerce_Settings {
     private function render_imports_tab() {
         echo '<h2>Run Imports</h2>';
         echo '<form method="post">';
+
+        wp_nonce_field('erp_sync_action_nonce');
+        
         echo '<input type="hidden" name="erp_sync_action" value="run_sync">';
         echo '<select name="sync_type">
                 <option value="sync-qty">Stock Quantity</option>
@@ -72,10 +75,12 @@ class ERP_WooCommerce_Settings {
         echo '</form>';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['erp_sync_action']) && $_POST['erp_sync_action'] === 'run_sync') {
+            check_admin_referer('erp_sync_action_nonce');
             $sync_type = sanitize_text_field($_POST['sync_type']);
             $result = $this->trigger_sync($sync_type);
             echo '<p><strong>' . esc_html($result) . '</strong></p>';
         }
+        
     }
 
     /** Settings Tab **/

@@ -46,7 +46,7 @@ abstract class Abstract_Order_Handler
         $asc_date = $order->get_date_created()->format('Y-m-d');
         $asc_time = $order->get_date_created()->format("H:i:s");
         $asc_order_total = number_format($order->get_total(), 2, '.', '');
-        $asc_cust_ref = get_post_meta($order->get_order_number(), '_purchase_order_number', true);
+        $asc_cust_ref = get_post_meta($order->get_id(), '_purchase_order_number', true);
 
         $items = [];
         foreach ($order->get_items() as $item) {

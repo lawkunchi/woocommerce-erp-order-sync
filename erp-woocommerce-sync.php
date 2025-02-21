@@ -41,13 +41,16 @@ require_once plugin_dir_path(__FILE__) . 'includes/imports/class-cron.php';
 require_once plugin_dir_path(__FILE__) . 'includes/imports/class-logger.php';
 
 // Initialize the plugin classes
-function woocommerce_rest_order_sync_init()
-{
+function woocommerce_rest_order_sync_init() {
+    if (!class_exists('WooCommerce')) {
+        error_log('WooCommerce is not active. ERP Sync plugin will not load.');
+        return;
+    }
+
     new REST_Order_Handler();
     new Order_Resend_Handler();
 }
 add_action('plugins_loaded', 'woocommerce_rest_order_sync_init');
-
 
 
 // Register Custom Cron Intervals

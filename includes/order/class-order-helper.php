@@ -26,7 +26,7 @@ class Order_Helper {
             'items' => self::format_order_items($order),
             'total' => number_format($order->get_total(), 2, '.', ''),
             'created_at' => $order->get_date_created()->format('Y-m-d H:i:s'),
-            'customer_ref' => preg_replace('/&(?!#?[a-z0-9]+;)/', 'and', get_post_meta($order->get_order_number(), '_purchase_order_number', true)),
+            'customer_ref' => preg_replace('/&(?!#?[a-z0-9]+;)/', 'and', get_post_meta($order->get_id(), '_purchase_order_number', true)),
         ];
     }
 
