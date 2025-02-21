@@ -11,7 +11,6 @@ class REST_Order_Handler extends Abstract_Order_Handler {
         $order = wc_get_order($order_id);
         if (!$order) return;
 
-        $json_data = $this->format_order_to_json($order);
-        $this->send_to_api($json_data, $order);
+        $this->send_to_api($order);
     }
 }

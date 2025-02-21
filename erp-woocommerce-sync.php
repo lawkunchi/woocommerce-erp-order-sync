@@ -3,7 +3,7 @@
 /**
  * Plugin Name: ERP Woocommerce Sync
  * Description: Sends WooCommerce order data to an external erp system.
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: Lawrence Chibondo
  * Author URI: https://linkedin.com/in/lawrence-chibondo
  * License: GPL-2.0+

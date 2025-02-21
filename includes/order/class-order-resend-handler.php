@@ -14,9 +14,9 @@ class Order_Resend_Handler extends Abstract_Order_Handler {
     }
 
     public function process_resend_order($order) {
+        
         if (!$order) return;
 
-        $json_data = $this->format_order_to_json($order);
-        $this->send_to_api($json_data, $order);
+        $this->send_to_api($order);
     }
 }
