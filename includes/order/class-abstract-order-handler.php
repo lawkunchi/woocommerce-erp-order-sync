@@ -1,22 +1,33 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-abstract class Abstract_Order_Handler {
+abstract class Abstract_Order_Handler
+{
     protected $api_endpoint;
     protected $emails;
 
     public function __construct() {
-        $plugin_options = get_option('woocommerce_erp_order_sync_options', [
+        $default_options = [
             'api_endpoint' => "http://asc.xact.co.za:50007/gas/ws/r/ws/demo-salesdoc-ws",
             'emails' => ['therushin.chetty@gmail.com', 'tom@mailmen.co.za']
-        ]);
+        ];
     
-        $this->api_endpoint = $plugin_options['api_endpoint'] ?? "http://asc.xact.co.za:50007/gas/ws/r/ws/demo-salesdoc-ws";
-        $this->emails = $plugin_options['emails'] ?? ['therushin.chetty@gmail.com', 'tom@mailmen.co.za'];
+        $plugin_options = get_option('woocommerce_erp_order_sync_options', []);
+    
+        // Merge saved options with defaults
+        $plugin_options = wp_parse_args($plugin_options, $default_options);
+    
+        // Save defaults if missing
+        update_option('woocommerce_erp_order_sync_options', $plugin_options);
+    
+        $this->api_endpoint = $plugin_options['api_endpoint'];
+        $this->emails = $plugin_options['emails'];
     }
+    
 
     /** Common method to format order data as JSON **/
-    protected function format_order_to_json($order) {
+    protected function format_order_to_json($order)
+    {
         $asc_order_id = $order->get_id();
         $asc_user = $order->get_user();
         $asc_username = $asc_user->user_login;
@@ -88,7 +99,8 @@ abstract class Abstract_Order_Handler {
     }
 
     /** Common method to send data to API **/
-    protected function send_to_api($json_data, $order) {
+    protected function send_to_api($json_data, $order)
+    {
         $response = wp_remote_post($this->api_endpoint, [
             'method'    => 'POST',
             'body'      => $json_data,
@@ -103,7 +115,8 @@ abstract class Abstract_Order_Handler {
     }
 
     /** Handle API response errors **/
-    protected function handle_response_errors($response, $order) {
+    protected function handle_response_errors($response, $order)
+    {
         $httpCode = wp_remote_retrieve_response_code($response);
         if ($httpCode != 200) {
             $order->add_order_note('Failed to send order to Xact.', 0, true);
