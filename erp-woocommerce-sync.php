@@ -17,11 +17,24 @@
 if (!defined('ABSPATH')) exit;
 
 // Include required files
+
+/**
+ * General
+ */
 require_once plugin_dir_path(__FILE__) . 'admin/class-settings.php';
-require_once plugin_dir_path(__FILE__) . 'includes/class-rest-order-handler.php';
-require_once plugin_dir_path(__FILE__) . 'includes/class-order-resend-handler.php';
+
+
+
+/**
+ * Order Handler Files
+ */
+require_once plugin_dir_path(__FILE__) . 'includes/order/class-rest-order-handler.php';
+require_once plugin_dir_path(__FILE__) . 'includes/order/class-order-resend-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/handlers/class-checkout-validation-handler.php';
 
+/**
+ * Data Import Files
+ */
 require_once plugin_dir_path(__FILE__) . 'includes/imports/class-importer.php';
 require_once plugin_dir_path(__FILE__) . 'includes/imports/class-rest-api.php';
 require_once plugin_dir_path(__FILE__) . 'includes/imports/class-cron.php';
