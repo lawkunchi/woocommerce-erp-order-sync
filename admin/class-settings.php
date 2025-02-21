@@ -103,6 +103,14 @@ class ERP_WooCommerce_Settings {
         add_settings_section('general_settings', 'General Settings', null, self::$option_name);
 
         add_settings_field(
+            'api_type',
+            'API Type',
+            [$this, 'api_type_callback'],
+            self::$option_name,
+            'general_settings'
+        );
+
+        add_settings_field(
             'api_endpoint',
             'API Endpoint',
             [$this, 'api_endpoint_callback'],
@@ -126,6 +134,20 @@ class ERP_WooCommerce_Settings {
             'general_settings'
         );
     }
+
+/** API Type Field **/
+    public function api_type_callback() {
+        $options = get_option(self::$option_name);
+        $api_type = isset($options['api_type']) ? $options['api_type'] : 'soap';
+        ?>
+        <select name="<?php echo self::$option_name; ?>[api_type]">
+            <option value="soap" <?php selected($api_type, 'soap'); ?>>SOAP</option>
+            <option value="rest" <?php selected($api_type, 'rest'); ?>>REST</option>
+        </select>
+        <p class="description">Choose whether to use SOAP or REST API for order sync.</p>
+        <?php
+    }
+
 
     /** API Endpoint Field **/
     public function api_endpoint_callback() {
